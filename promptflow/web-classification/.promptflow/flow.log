@@ -1,0 +1,634 @@
+2023-08-14 16:02:09 -0700   18848 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: a32fa4ef-c0ab-49aa-b217-f3755619ff3f_fetch_text_content_from_url_0
+2023-08-14 16:02:10 -0700   18848 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 16:02:10 -0700   18848 execution.flow     INFO     Executing node summarize_text_content. node run id: a32fa4ef-c0ab-49aa-b217-f3755619ff3f_summarize_text_content_0
+2023-08-14 16:02:10 -0700   18848 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+2023-08-14 16:02:10 -0700   18848 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 596, in request_raw
+    result = _thread_context.session.request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 368, in prepare
+    self.prepare_url(url, params)
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 439, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 288, in request
+    result = self.request_raw(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 609, in request_raw
+    raise error.APIConnectionError(
+openai.error.APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 171, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-14 16:04:08 -0700   17900 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 3dcb7e81-d3b4-4f19-8a71-ba00d3566cc0_fetch_text_content_from_url_0
+2023-08-14 16:04:09 -0700   17900 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 16:04:09 -0700   17900 execution.flow     INFO     Executing node summarize_text_content. node run id: 3dcb7e81-d3b4-4f19-8a71-ba00d3566cc0_summarize_text_content_0
+2023-08-14 16:04:09 -0700   17900 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+2023-08-14 16:04:09 -0700   17900 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 596, in request_raw
+    result = _thread_context.session.request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 368, in prepare
+    self.prepare_url(url, params)
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 439, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 288, in request
+    result = self.request_raw(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 609, in request_raw
+    raise error.APIConnectionError(
+openai.error.APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 171, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://aoai-api-endpoint/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-14 16:07:53 -0700   27596 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: dbc40f1b-fbfd-476f-956e-4b4ff50ded8a_fetch_text_content_from_url_0
+2023-08-14 16:07:54 -0700   27596 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 16:07:54 -0700   27596 execution.flow     INFO     Executing node summarize_text_content. node run id: dbc40f1b-fbfd-476f-956e-4b4ff50ded8a_summarize_text_content_0
+2023-08-14 16:07:54 -0700   27596 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+2023-08-14 16:07:54 -0700   27596 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 596, in request_raw
+    result = _thread_context.session.request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 368, in prepare
+    self.prepare_url(url, params)
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 439, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 288, in request
+    result = self.request_raw(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 609, in request_raw
+    raise error.APIConnectionError(
+openai.error.APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 171, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com//openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-14 16:08:12 -0700    6716 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: a5ab7b77-bdfa-45c6-9dff-e3c76727080f_fetch_text_content_from_url_0
+2023-08-14 16:08:13 -0700    6716 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 16:08:13 -0700    6716 execution.flow     INFO     Executing node summarize_text_content. node run id: a5ab7b77-bdfa-45c6-9dff-e3c76727080f_summarize_text_content_0
+2023-08-14 16:08:13 -0700    6716 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+2023-08-14 16:08:13 -0700    6716 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 596, in request_raw
+    result = _thread_context.session.request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 368, in prepare
+    self.prepare_url(url, params)
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\requests\models.py", line 439, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 288, in request
+    result = self.request_raw(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 609, in request_raw
+    raise error.APIConnectionError(
+openai.error.APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 171, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits APIConnectionError: Error communicating with OpenAI: Invalid URL 'eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview': No scheme supplied. Perhaps you meant https://eastus.api.cognitive.microsoft.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview? [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-14 16:08:49 -0700   19036 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 642337f0-f9d7-4c97-91cc-67210a11180e_fetch_text_content_from_url_0
+2023-08-14 16:08:50 -0700   19036 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 16:08:50 -0700   19036 execution.flow     INFO     Executing node summarize_text_content. node run id: 642337f0-f9d7-4c97-91cc-67210a11180e_summarize_text_content_0
+2023-08-14 16:08:51 -0700   19036 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-14 16:08:51 -0700   19036 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-14 17:25:17 -0700    7732 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 3f5b869d-61ca-4686-a14d-6e9a58dc719e_fetch_text_content_from_url_0
+2023-08-14 17:25:18 -0700    7732 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 17:25:18 -0700    7732 execution.flow     INFO     Executing node summarize_text_content. node run id: 3f5b869d-61ca-4686-a14d-6e9a58dc719e_summarize_text_content_0
+2023-08-14 17:25:19 -0700    7732 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-14 17:25:19 -0700    7732 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-14 17:30:04 -0700   15416 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 314fe203-ed15-48e0-be4c-44bc073816e6_fetch_text_content_from_url_0
+2023-08-14 17:30:05 -0700   15416 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-14 17:30:05 -0700   15416 execution.flow     INFO     Executing node summarize_text_content. node run id: 314fe203-ed15-48e0-be4c-44bc073816e6_summarize_text_content_0
+2023-08-14 17:30:06 -0700   15416 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-14 17:30:06 -0700   15416 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-15 11:10:40 -0700   34124 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 8b661200-25c7-4774-a36f-955a9f4c09fe_fetch_text_content_from_url_0
+2023-08-15 11:10:42 -0700   34124 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-15 11:10:42 -0700   34124 execution.flow     INFO     Executing node summarize_text_content. node run id: 8b661200-25c7-4774-a36f-955a9f4c09fe_summarize_text_content_0
+2023-08-15 11:10:43 -0700   34124 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-15 11:10:43 -0700   34124 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-15 11:18:50 -0700   26044 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: bb31bf01-d635-4309-a8c0-9cb2073d659b_fetch_text_content_from_url_0
+2023-08-15 11:18:51 -0700   26044 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-15 11:18:51 -0700   26044 execution.flow     INFO     Executing node summarize_text_content. node run id: bb31bf01-d635-4309-a8c0-9cb2073d659b_summarize_text_content_0
+2023-08-15 11:18:53 -0700   26044 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-15 11:18:53 -0700   26044 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-15 11:19:05 -0700   33940 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 85655edb-64aa-42fa-a51b-c341de5cad81_fetch_text_content_from_url_0
+2023-08-15 11:19:06 -0700   33940 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-15 11:19:06 -0700   33940 execution.flow     INFO     Executing node summarize_text_content. node run id: 85655edb-64aa-42fa-a51b-c341de5cad81_summarize_text_content_0
+2023-08-15 11:19:08 -0700   33940 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-15 11:19:08 -0700   33940 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-15 18:18:14 -0700   11968 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: f37d404c-435c-48c3-8d4a-c426d52279b7_fetch_text_content_from_url_0
+2023-08-15 18:18:20 -0700   11968 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-15 18:18:20 -0700   11968 execution.flow     INFO     Executing node summarize_text_content. node run id: f37d404c-435c-48c3-8d4a-c426d52279b7_summarize_text_content_0
+2023-08-15 18:18:25 -0700   11968 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-15 18:18:25 -0700   11968 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-15 18:21:34 -0700    3432 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: ce2e1573-e757-46c0-b9a9-e1f571b4b430_fetch_text_content_from_url_0
+2023-08-15 18:21:40 -0700    3432 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-15 18:21:40 -0700    3432 execution.flow     INFO     Executing node summarize_text_content. node run id: ce2e1573-e757-46c0-b9a9-e1f571b4b430_summarize_text_content_0
+2023-08-15 18:21:46 -0700    3432 execution          WARNING  [summarize_text_content in line 0] stderr> Exception occurs: InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+2023-08-15 18:21:46 -0700    3432 execution          ERROR    Node summarize_text_content in line 0 failed. Exception: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors].
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 156, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\aoai.py", line 152, in chat
+    completion = openai.ChatCompletion.create(**{**self._connection_dict, **params})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 91, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\openai_injector.py", line 45, in wrapped_method
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\openai\api_requestor.py", line 763, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 114, in invoke_tool_with_cache
+    result = self.invoke_tool(f, args, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 158, in invoke_tool
+    raise e
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\_core\flow_execution_context.py", line 152, in invoke_tool
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\osomorog.REDMOND\.conda\envs\pf_code\Lib\site-packages\promptflow\tools\common.py", line 197, in wrapper
+    raise WrappedOpenAIError(e)
+promptflow.tools.exception.WrappedOpenAIError: OpenAI API hits InvalidRequestError: The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again. [Error reference: https://platform.openai.com/docs/guides/error-codes/api-errors]
+2023-08-15 18:28:15 -0700   21036 execution.flow     INFO     Executing node fetch_text_content_from_url. node run id: 6f02f4b3-6822-4a33-8b55-c32aad105283_fetch_text_content_from_url_0
+2023-08-15 18:28:21 -0700   21036 execution.flow     INFO     Node fetch_text_content_from_url completes.
+2023-08-15 18:28:21 -0700   21036 execution.flow     INFO     Executing node summarize_text_content. node run id: 6f02f4b3-6822-4a33-8b55-c32aad105283_summarize_text_content_0
+2023-08-15 18:28:30 -0700   21036 execution.flow     INFO     Node summarize_text_content completes.
+2023-08-15 18:28:30 -0700   21036 execution.flow     INFO     Executing node prepare_examples. node run id: 6f02f4b3-6822-4a33-8b55-c32aad105283_prepare_examples_0
+2023-08-15 18:28:31 -0700   21036 execution.flow     INFO     Node prepare_examples completes.
+2023-08-15 18:28:31 -0700   21036 execution.flow     INFO     Executing node classify_with_llm. node run id: 6f02f4b3-6822-4a33-8b55-c32aad105283_classify_with_llm_0
+2023-08-15 18:28:32 -0700   21036 execution.flow     INFO     Node classify_with_llm completes.
+2023-08-15 18:28:32 -0700   21036 execution.flow     INFO     Executing node convert_to_dict. node run id: 6f02f4b3-6822-4a33-8b55-c32aad105283_convert_to_dict_0
+2023-08-15 18:28:33 -0700   21036 execution.flow     INFO     Node convert_to_dict completes.
