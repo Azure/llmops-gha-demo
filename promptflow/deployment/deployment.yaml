@@ -25,7 +25,7 @@ environment_variables:
   PROMPTFLOW_RUN_MODE: serving
 
   # for pulling connections from workspace
-  PRT_CONFIG_OVERRIDE: deployment.subscription_id=<sub-id>,deployment.resource_group=o<resource-group>,deployment.workspace_name=<workspace-name>,deployment.endpoint_name=<endpoint-name>,deployment.deployment_name=<deployment-name>
+  PRT_CONFIG_OVERRIDE: deployment.subscription_id=ea4faa5b-5e44-4236-91f6-5483d5b17d14,deployment.resource_group=osomorog,deployment.workspace_name=abes-policy-testing,deployment.endpoint_name=web-classification-ecf671,deployment.deployment_name=blue
 
   # (Optional) When there are multiple fields in the response, using this env variable will filter the fields to expose in the response.
   # For example, if there are 2 flow outputs: "answer", "context", and I only want to have "answer" in the endpoint response, I can set this env variable to '["answer"]'.
