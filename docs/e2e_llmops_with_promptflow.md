@@ -1,4 +1,4 @@
-# Set up e2e LLMOps with Promptflow and GitHub (preview)
+# Set up e2e LLMOps with Prompt flow and GitHub (preview)
 
 Azure Machine Learning allows you to integrate with [GitHub Actions](https://docs.github.com/actions) to automate the machine learning lifecycle. Some of the operations you can automate are:
 
@@ -7,10 +7,10 @@ Azure Machine Learning allows you to integrate with [GitHub Actions](https://doc
 * Registering of prompt flow models
 * Deployment of prompt flow models
 
-In this article, you learn about using Azure Machine Learning to set up an end-to-end LLMOps pipeline that runs a web classification flow that classifies a website based on a given URL. The flow is made up of multiple LLM calls and components, each serving  different functions. All the LLMs used are managed and store in your Azure Machine Learning workspace in your Promptflow connections
+In this article, you learn about using Azure Machine Learning to set up an end-to-end LLMOps pipeline that runs a web classification flow that classifies a website based on a given URL. The flow is made up of multiple LLM calls and components, each serving  different functions. All the LLMs used are managed and store in your Azure Machine Learning workspace in your Prompt flow connections
 
 > [!TIP]
-> We recommend you understand how we integrate [LLMOps with Promptflow](//) 
+> We recommend you understand how [Prompt flow works](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/get-started-prompt-flow?view=azureml-api-2) 
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ In this article, you learn about using Azure Machine Learning to set up an end-t
 
 ## Set up authentication with Azure and GitHub
 
-Before you can set up an Promptflow project with Machine Learning, you need to set up authentication for Azure GitHub.
+Before you can set up an Prompt flow project with Machine Learning, you need to set up authentication for Azure GitHub.
 
 ### Create service principal
    Create one Prod service principal for this demo. You can add more depending on how many environments, you want to work on (Dev or Prod or Both). Service principals can be created using one of the following methods:
@@ -83,13 +83,11 @@ Before you can set up an Promptflow project with Machine Learning, you need to s
 
 1. Close the Cloud Shell once the service principals are created. 
 
-## Clone Example Repo
-1. Fork example repo. [LLMOps Repo](https://github.com/Azure/llmops-gha-demo/fork)
+## Set up GitHub repo
+1. Fork example repo. [LLMOps Demo Template Repo](https://github.com/Azure/llmops-gha-demo/) in your GitHub organization
 
-1. Clone repo to your local machine
-```
- git clone https://github.com/<user-name>/llmops-gha-demo
-```
+1. Go to https://github.com/Azure/llmops-gha-demo/fork to fork the LLMOps demo repo into your GitHub org. This repo has reusable LLMOps code that can be used across multiple projects. 
+
 ## Add secret to GitHub Repo
 
 1. From your GitHub project, select **Settings**:
@@ -116,16 +114,22 @@ Before you can set up an Promptflow project with Machine Learning, you need to s
 
 Connection helps securely store and manage secret keys or other sensitive credentials required for interacting with LLM and other external tools for example Azure Content Safety.
 
-In this guide, we will use flow `web-classification` which uses connection `azure_open_ai_connection` inside, we need to set up the connection if we haven’t added it before.
+In this guide, we will use flow `web-classification` which uses connection `Default_AzureOpenAI` inside, we need to set up the connection if we haven’t added it before.
 
-Please go to workspace portal, click `Prompt flow` -> `Connections` -> `Create`, then follow the instruction to create your own connections. Learn more on [connections](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-connections?view=azureml-api-2).
+Please go to workspace portal, click `Prompt flow` -> `Connections` -> `Create`, then follow the instruction to create your own connections called `Default_AzureOpenAI`. Learn more on [connections](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-connections?view=azureml-api-2).
+
+![Screenshot of Prompt flow Connections](media/e2e-llmops/promptflow_connections.png)
 
 ## Setup variables with for Prompt flow and GitHub Actions 
 
-### Update workflow to connect to your Azure Machine Learning workspace
-1. Update `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` to connect to your Azure Machine Learning workspace
-You'll need to update the CLI setup file variables to match your workspace. 
+1. Clone repo to your local machine
 
+    ```
+    git clone https://github.com/<user-name>/llmops-gha-demo
+    ```
+
+### Update workflow to connect to your Azure Machine Learning workspace
+1. You need to update `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` to connect to your Azure Machine Learning workspace. You'll need to update the CLI setup file variables to match your workspace. 
 1. In your cloned repository, go to `.github/workflow/`. 
 1. Edit `env` section in the `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` and update these variables in the file. 
    
@@ -137,10 +141,10 @@ You'll need to update the CLI setup file variables to match your workspace.
 
 ### Update run.yml with your connections and runtime
 
-You'll use a `run.yml` file to deploy your Azure Machine Learning pipeline. This is a flow run definition. You only need to make this update if you're using a name other than `pf-runtime` for your [prompt flow runtime](https://learn.microsoft.com/azure/machine-learning/prompt-flow/how-to-create-manage-runtime). You will also need to update all the `connections` to match the connections in your Azure Machine Learning workspace and `deployment_name` to match the name of your GPT 3.5 Turbo deployment associate with that connection.
+You'll use the `run.yml` and `run_evaluation` files to deploy the Prompt flow standard run and evaluation run. This is a flow run definition. You only need to update your [prompt flow runtime](https://learn.microsoft.com/azure/machine-learning/prompt-flow/how-to-create-manage-runtime). You will also need to update all the `connections` to match the connections in your Azure Machine Learning workspace and `deployment_name` to match the name of your GPT 3.5 Turbo deployment associate with that connection.
 
-1. In your cloned repository, go to `web-classification/run.yml`. 
-1. Each time you see `runtime: abe`, update the value of `pf-runtime` with your runtime name.
+1. In your cloned repository, open `web-classification/run.yml` and `web-classification/run_evaluation.yml` 
+1. Each time you see `runtime: <runtime-name>`, update the value of `<runtime-name>` with your runtime name.
 1. Each time you see `connection: Default_AzureOpenAI`, update the value of `Default_AzureOpenAI`  to match the connection name in your Azure Machine Learning workspace.
 1. Each time you see `deployment_name: gpt-35-turbo-0301`, update the value of `gpt-35-turbo-0301` with the name of your GPT 3.5 Turbo deployment associate with that connection.
 
@@ -171,7 +175,7 @@ This training pipeline contains the following steps:
 ## Run and Evaluate Prompt Flow in AzureML with GitHub Actions
 Using a [GitHub Action workflow](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?view=azureml-api-2&tabs=userlevel#step-5-run-your-github-actions-workflow) we will trigger actions to run a Prompt Flow job in Azure Machine learning. 
 
-This pipeline will start the promptflow run and evaluate the results. When the job is complete, the prompt flpw model will be registered in the Azure Machine Learning workspace and be available for deployment.
+This pipeline will start the prompt flow run and evaluate the results. When the job is complete, the prompt flpw model will be registered in the Azure Machine Learning workspace and be available for deployment.
 
 1. In your GitHub project repository, select **Actions**  
  
@@ -239,5 +243,4 @@ The sample Prompt flow run & evaluation and GitHub workflows can be used as a st
 
 * [Install and set up Python SDK v2](https://aka.ms/sdk-v2-install)
 * [Install and set up Python CLI v2](how-to-configure-cli.md)
-* [Prompt Flow Docs]() 
-* [Gen AI Docs]() 
+* [Prompt Flow Documentation](https://learn.microsoft.com/azure/machine-learning/prompt-flow/overview-what-is-prompt-flow?view=azureml-api-2) 
