@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
 endpoint_name: web-classification-7272ff
-model: azureml:web-classification-model:11
+model: azureml:web-classification-model:1
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
 environment: 
