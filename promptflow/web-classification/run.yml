@@ -1,0 +1,14 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: .
+data: data.jsonl
+
+# define cloud resource
+runtime: <runtime-name>
+
+connections:
+  classify_with_llm:
+    connection: Default_AzureOpenAI
+    deployment_name: gpt-35-turbo-0301
+  summarize_text_content:
+    connection: Default_AzureOpenAI
+    deployment_name: gpt-35-turbo-0301
