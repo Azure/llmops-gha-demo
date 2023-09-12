@@ -103,12 +103,12 @@ Before you can set up an Prompt flow project with Machine Learning, you need to 
 1. Add each of the following additional GitHub secrets using the corresponding values from the service principal output as the content of the secret:  
     - **GROUP**: \<Resource Group Name\>
     - **WORKSPACE**: \<Azure ML Workspace Name\>
-    - **SUBSCRIPTION_ID**: \<Subscription ID\>
+    - **SUBSCRIPTION**: \<Subscription ID\>
 
     |Variable  | Description  |
     |---------|---------|
     |GROUP     |      Name of resource group    |
-    |SUBSCRIPTION_ID     |    Subscription ID of your workspace    |
+    |SUBSCRIPTION     |    Subscription ID of your workspace    |
     |WORKSPACE     |     Name of Azure Machine Learning workspace     |  
     
 > [!NOTE]
@@ -120,7 +120,7 @@ Connection helps securely store and manage secret keys or other sensitive creden
 
 In this guide, we will use flow `web-classification` which uses connection `Default_AzureOpenAI` inside, we need to set up the connection if we haven’t added it before.
 
-Please go to workspace portal, click `Prompt flow` -> `Connections` -> `Create`, then follow the instruction to create your own connections called `Default_AzureOpenAI`. Learn more on [connections](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-connections?view=azureml-api-2).
+Please go to workspace portal, click `Prompt flow` -> `Connections` -> `Create` -> `Azure OpenAI`, then follow the instruction to create your own connections called `Default_AzureOpenAI`. Learn more on [connections](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-connections?view=azureml-api-2).
 
 ![Screenshot of Prompt flow Connections](media/e2e-llmops/promptflow_connections.png)
 
