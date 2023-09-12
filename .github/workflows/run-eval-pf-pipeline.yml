@@ -8,7 +8,7 @@ on:
 env: 
   GROUP: ${{secrets.GROUP}}
   WORKSPACE: ${{secrets.WORKSPACE}}
-  SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID}}
+  SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
   RUN_NAME: web_classification_variant_1_20230816_215600_605116
   EVAL_RUN_NAME: classification_accuracy_eval_default_20230821_111809_077086
 
