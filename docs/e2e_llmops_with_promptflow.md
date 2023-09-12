@@ -105,6 +105,12 @@ Before you can set up an Prompt flow project with Machine Learning, you need to 
     - **WORKSPACE**: \<Azure ML Workspace Name\>
     - **SUBSCRIPTION_ID**: \<Subscription ID\>
 
+    |Variable  | Description  |
+    |---------|---------|
+    |GROUP     |      Name of resource group    |
+    |SUBSCRIPTION_ID     |    Subscription ID of your workspace    |
+    |WORKSPACE     |     Name of Azure Machine Learning workspace     |  
+    
 > [!NOTE]
 > This finishes the prerequisite section and the deployment of the solution accelerator can happen accordingly.
 
@@ -136,16 +142,7 @@ Please go to workspace portal, click `Prompt flow` -> `Runtime` -> `Add`, then f
 ### Update workflow to connect to your Azure Machine Learning workspace
 1. You need to update `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` to connect to your Azure Machine Learning workspace. You'll need to update the CLI setup file variables to match your workspace. 
 1. In your cloned repository, go to `.github/workflow/`. 
-1. Edit `env` section in the `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` and update these variables in the file. 
-   
-    |Variable  | Description  |
-    |---------|---------|
-    |GROUP     |      Name of resource group    |
-    |SUBSCRIPTION_ID     |    Subscription ID of your workspace    |
-    |WORKSPACE     |     Name of Azure Machine Learning workspace     | 
-
-> [!TIP]
-> The `env` section in the `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` contains the workspace secrets you added in the previous step. 
+1. Verify `env` section in the `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` refers to the workspace secrets you added in the previous step. 
 
 ### Update run.yml with your connections and runtime
 
