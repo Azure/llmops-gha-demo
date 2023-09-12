@@ -84,9 +84,7 @@ Before you can set up an Prompt flow project with Machine Learning, you need to 
 1. Close the Cloud Shell once the service principals are created. 
 
 ## Set up GitHub repo
-1. Fork example repo. [LLMOps Demo Template Repo](https://github.com/Azure/llmops-gha-demo/) in your GitHub organization
-
-1. Go to https://github.com/Azure/llmops-gha-demo/fork to fork the LLMOps demo repo into your GitHub org. This repo has reusable LLMOps code that can be used across multiple projects. 
+1. Fork example repo. [LLMOps Demo Template Repo](https://github.com/Azure/llmops-gha-demo/fork) in your GitHub organization. This repo has reusable LLMOps code that can be used across multiple projects. 
 
 ## Add secret to GitHub Repo
 
@@ -103,9 +101,9 @@ Before you can set up an Prompt flow project with Machine Learning, you need to 
     ![Screenshot of GitHub Secrets String 1.](media/e2e-llmops/github-secrets-string.png)
 
 1. Add each of the following additional GitHub secrets using the corresponding values from the service principal output as the content of the secret:  
-    - **GROUP**  
-    - **WORKSPACE**  
-    - **SUBSCRIPTION**  
+    - **GROUP**: \<Resource Group Name\>
+    - **WORKSPACE**: \<Azure ML Workspace Name\>
+    - **SUBSCRIPTION_ID**: \<Subscription ID\>
 
 > [!NOTE]
 > This finishes the prerequisite section and the deployment of the solution accelerator can happen accordingly.
@@ -119,6 +117,13 @@ In this guide, we will use flow `web-classification` which uses connection `Defa
 Please go to workspace portal, click `Prompt flow` -> `Connections` -> `Create`, then follow the instruction to create your own connections called `Default_AzureOpenAI`. Learn more on [connections](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-connections?view=azureml-api-2).
 
 ![Screenshot of Prompt flow Connections](media/e2e-llmops/promptflow_connections.png)
+
+## Setup runtime for Prompt flow 
+Prompt flow's runtime provides the computing resources required for the application to run, including a Docker image that contains all necessary dependency packages.
+
+In this guide, we will use a runtime to run your prompt flow. You need to create your own [Prompt flow runtime](https://learn.microsoft.com/azure/machine-learning/prompt-flow/how-to-create-manage-runtime)
+
+Please go to workspace portal, click `Prompt flow` -> `Runtime` -> `Add`, then follow the instruction to create your own connections
 
 ## Setup variables with for Prompt flow and GitHub Actions 
 
@@ -136,8 +141,11 @@ Please go to workspace portal, click `Prompt flow` -> `Connections` -> `Create`,
     |Variable  | Description  |
     |---------|---------|
     |GROUP     |      Name of resource group    |
-    |SUBSCRIPTION     |    Subscription of your workspace    |
+    |SUBSCRIPTION_ID     |    Subscription ID of your workspace    |
     |WORKSPACE     |     Name of Azure Machine Learning workspace     | 
+
+> [!TIP]
+> The `env` section in the `run-eval-pf-pipeline.yml` and `deploy-pf-online-endpoint-pipeline.yml` contains the workspace secrets you added in the previous step. 
 
 ### Update run.yml with your connections and runtime
 
