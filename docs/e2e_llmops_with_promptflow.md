@@ -210,7 +210,7 @@ With the Prompt flow model registered in the Machine learning workspace, you are
 
 ## Deploy Prompt Flow in AzureML with GitHub Actions
 
-This scenario includes prebuilt workflows for two approaches to deploying a trained model, batch scoring or a deploying a model to an endpoint for real-time scoring. You may run either or both of these workflows to test the performance of the model in your Azure Machine Learning workspace.
+This scenario includes prebuilt workflows for deploying a model to an endpoint for real-time scoring. You may run the workflow to test the performance of the model in your Azure Machine Learning workspace.
 
 ### Online Endpoint  
       
@@ -232,6 +232,8 @@ This scenario includes prebuilt workflows for two approaches to deploying a trai
 
      ![Screenshot of Machine Learning taxi Online endpoint test.](media/e2e-llmops/azure-ml-online-endpoint-test.png)
 
+> [!NOTE] 
+> Make sure you have already [granted permissions to the endpoint](https://review.learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/how-to-deploy-for-real-time-inference#grant-permissions-to-the-endpoint) before you test or consume the endpoint.
 
 ## Moving to production
 
