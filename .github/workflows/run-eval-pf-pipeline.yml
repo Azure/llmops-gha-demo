@@ -6,9 +6,9 @@ on:
     branches: [ main ]
 
 env: 
-  GROUP: thwagne-policy-test
-  WORKSPACE: abes-testing
-  SUBSCRIPTION: ea4faa5b-5e44-4236-91f6-5483d5b17d14
+  GROUP: ${{secrets.GROUP}}
+  WORKSPACE: ${{secrets.WORKSPACE}}
+  SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
   RUN_NAME: web_classification_variant_1_20230816_215600_605116
   EVAL_RUN_NAME: classification_accuracy_eval_default_20230821_111809_077086
 
