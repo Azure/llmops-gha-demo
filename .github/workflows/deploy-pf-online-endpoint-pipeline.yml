@@ -42,7 +42,10 @@ jobs:
     - name: Display endpoint name
       run: echo "Endpoint name is:" ${{env.ENDPOINT_NAME}}
     - name: Setup endpoint
-      run: az ml online-endpoint create --file promptflow/deployment/endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run:  echo "EP_OBJ_ID=$(az ml online-endpoint create --file promptflow/deployment/endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} | jq -r '.identity.principal_id')" >> "$GITHUB_ENV"
+    - name: Grant endpoint permission to workspace
+      run: | 
+        az role assignment create --assignee-object-id "${{ env.EP_OBJ_ID }}" --assignee-principal-type "ServicePrincipal" --role "AzureML Data Scientist" --scope "/subscriptions/${{ env.SUBSCRIPTION }}/resourceGroups/${{env.GROUP}}/providers/Microsoft.MachineLearningServices/workspaces/${{ env.WORKSPACE }}"
     - name: Update deployment PRT_CONFIG variable
       run: |
         PRT_CONFIG_OVERRIDE=deployment.subscription_id=${{ env.SUBSCRIPTION }},deployment.resource_group=${{ env.GROUP }},deployment.workspace_name=${{ env.WORKSPACE }},deployment.endpoint_name=${{ env.ENDPOINT_NAME }},deployment.deployment_name=${{ env.DEPLOYMENT_NAME }}
