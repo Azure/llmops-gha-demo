@@ -1,3 +1,5 @@
 promptflow[azure]
 promptflow-tools
 bs4
+promptflow-vectordb
+azure-ai-ml
