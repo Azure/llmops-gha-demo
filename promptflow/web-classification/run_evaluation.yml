@@ -7,12 +7,12 @@ column_mapping:
   prediction: ${run.outputs.category}
 
 # define cloud resource
-runtime: automatic
+runtime: AlexRuntime
 
 connections:
   classify_with_llm:
-    connection: Default_AzureOpenAI
-    deployment_name: gpt-35-turbo-0301
+    connection: LoadBalancerAPI
+    deployment_name: gpt-35-turbo-4k-0613
   summarize_text_content:
-    connection: Default_AzureOpenAI
-    deployment_name: gpt-35-turbo-0301
+    connection: LoadBalancerAPI
+    deployment_name: gpt-35-turbo-4k-0613
