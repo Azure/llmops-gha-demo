@@ -9,10 +9,10 @@ column_mapping:
 # define cloud resource
 runtime: automatic
 
-connections:
-  classify_with_llm:
-    connection: Default_AzureOpenAI
-    deployment_name: gpt-35-turbo-0301
-  summarize_text_content:
-    connection: Default_AzureOpenAI
-    deployment_name: gpt-35-turbo-0301
+# connections:
+#   classify_with_llm:
+#     connection: Default_AzureOpenAI
+#     deployment_name: gpt-35-turbo-0301
+#   summarize_text_content:
+#     connection: Default_AzureOpenAI
+#     deployment_name: gpt-35-turbo-0301

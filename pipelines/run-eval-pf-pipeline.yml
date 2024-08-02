@@ -1,0 +1,113 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: web-classification
+
+stages:
+  - stage: Evaluate
+    jobs:
+      - job: Evaluate
+        steps:
+          - task: UsePythonVersion@0
+            displayName: 'Use Python 3.9'
+            inputs:
+              versionSpec: '3.9'
+
+          - script: |
+             ls
+            displayName: "List current directory"
+
+          - script: |
+             pip install -r promptflow/web-classification/requirements.txt
+            displayName: "Install promptflow"
+
+          - task: AzureCLI@2
+            displayName: Run promptflow
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                pfazure run create -f promptflow/web-classification/run.yml --subscription $(Subscription) -g $(ResourceGroup) -w $(Workspace) --stream > promptflow/llmops-helper/run_info.txt
+                cat promptflow/llmops-helper/run_info.txt
+
+          - script: |
+                RUN_NAME=$(python promptflow/llmops-helper/parse_run_output.py run_info.txt)
+                echo "##vso[task.setvariable variable=RUN_NAME]$RUN_NAME"
+                echo "Run name is: $RUN_NAME"
+            displayName: "Set run name"
+
+          - task: AzureCLI@2
+            displayName: Show promptflow results
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                pfazure run show-details --name $(RUN_NAME) --subscription $(Subscription) -g $(ResourceGroup) -w $(Workspace)
+
+          - task: AzureCLI@2
+            displayName: Run promptflow evaluations
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                pfazure run create -f promptflow/web-classification/run_evaluation.yml --run $(RUN_NAME) --subscription $(Subscription) -g $(ResourceGroup) -w $(Workspace) --stream > promptflow/llmops-helper/eval_info.txt
+
+          - script: |
+                EVAL_RUN_NAME=$(python promptflow/llmops-helper/parse_run_output.py eval_info.txt)
+                echo "##vso[task.setvariable variable=EVAL_RUN_NAME]$EVAL_RUN_NAME"
+                echo "Eval run name is: $EVAL_RUN_NAME"
+            displayName: "Set eval run name"
+
+          - task: AzureCLI@2
+            displayName: Show promptflow details
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                pfazure run show-details --name $(EVAL_RUN_NAME) --subscription $(Subscription) -g $(ResourceGroup) -w $(Workspace)
+
+          - task: AzureCLI@2
+            displayName: Show promptflow metrics
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                pfazure run show-metrics --name $(EVAL_RUN_NAME) --subscription $(Subscription) -g $(ResourceGroup) -w $(Workspace) > promptflow/llmops-helper/eval_result.json
+                cat promptflow/llmops-helper/eval_result.json
+
+      - job: Assert
+        dependsOn: Evaluate
+        steps:
+          - task: UsePythonVersion@0
+            displayName: 'Use Python 3.9'
+            inputs:
+              versionSpec: '3.9'
+
+          - script: |
+             ls
+            displayName: "List current directory"
+
+          - script: |
+             pip install -r promptflow/web-classification/requirements.txt
+            displayName: "Install promptflow"
+
+          - script: |
+             export ASSERT=$(python promptflow/llmops-helper/assert.py result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
+             echo "::debug::Assert has returned the following value: $ASSERT"
+             # assert.py will return True or False, but bash expects lowercase.
+             if ${ASSERT,,} ; then
+               echo "::debug::Prompt flow run met the quality bar and can be deployed."
+               echo "::set-output name=result::true"
+             else
+               echo "::warning::Prompt flow run didn't meet quality bar."
+               echo "::set-output name=result::false"
+             fi
+            displayName: "Get assert eval results"

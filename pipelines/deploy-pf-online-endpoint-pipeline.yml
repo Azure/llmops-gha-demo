@@ -1,0 +1,120 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: web-classification
+
+stages:
+  - stage: Deploy
+    jobs:
+      - job: Deploy
+        steps:
+          - script: |
+             az extension add -n ml -y --allow-preview true
+            displayName: "Install az ml extension"
+
+          - script: |
+             ls
+            displayName: "List current directory"
+
+          - task: AzureCLI@2
+            displayName: Create endpoint if not exist
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                ENDPOINT=$(Endpoint)
+                echo "Endpoint is $ENDPOINT"
+                endpoints=$(az ml online-endpoint list -g "$(ResourceGroup)" -w "$(Workspace)")
+                echo $endpoints
+                if echo "$endpoints" | jq -e --arg ENDPOINT "$ENDPOINT" '.[] | select(.name == $ENDPOINT)' > /dev/null; then
+                    echo "The endpoint '$ENDPOINT' exists."
+                else
+                    echo "Creating the endpoint '$ENDPOINT'"
+                    FILE_PATH="promptflow/deployment/endpoint.yaml"
+                    EP_OBJ_ID=$(az ml online-endpoint create --file $FILE_PATH --name $(Endpoint) -g $(ResourceGroup) -w $(Workspace) | jq -r '.identity.principal_id')
+                    echo "Endpoint object ID is $EP_OBJ_ID"
+                    az role assignment create --assignee-object-id $EP_OBJ_ID --assignee-principal-type "ServicePrincipal" --role "Azure Machine Learning Workspace Connection Secrets Reader" --scope "/subscriptions/$(SUBSCRIPTION)/resourceGroups/$(ResourceGroup)/providers/Microsoft.MachineLearningServices/workspaces/$(Workspace)"
+                fi
+          - task: AzureCLI@2
+            displayName: Create model
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                FILE_PATH="promptflow/deployment/model.yaml"
+                output=$(az ml model create --file $FILE_PATH -g $(ResourceGroup) -w $(WORKSPACE))
+                NAME=$(echo "$output" | jq -r '.name')
+                VERSION=$(echo "$output" | jq -r '.version')
+                ML_MODEL_NAME="azureml:$NAME:$VERSION"
+                echo "ML_MODEL_NAME is $ML_MODEL_NAME"
+                echo "##vso[task.setvariable variable=MODEL_NAME]$ML_MODEL_NAME"
+                
+          - task: AzureCLI@2
+            displayName: Create deployment
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                PRT_CONFIG_OVERRIDE=deployment.subscription_id=$(SUBSCRIPTION),deployment.resource_group=$(ResourceGroup),deployment.workspace_name=$(WORKSPACE),deployment.endpoint_name=$(Endpoint),deployment.deployment_name=$(Deployment)
+                echo $PRT_CONFIG_OVERRIDE
+                FILE_PATH="promptflow/deployment/deployment.yaml"
+
+                sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" "$FILE_PATH"
+
+                if grep -q "PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE" "$FILE_PATH"; then
+                    echo "PRT_CONFIG_OVERRIDE was successfully updated to '$PRT_CONFIG_OVERRIDE' in the file '$FILE_PATH'."
+                else
+                    echo "Failed to update PRT_CONFIG_OVERRIDE in the file '$FILE_PATH'."
+                fi
+
+                sed -i "s/^model: .*/model: $MODEL_NAME/" "$FILE_PATH"
+                if grep -q "^model: $MODEL_NAME" "$FILE_PATH"; then
+                    echo "Model name was successfully updated to '$MODEL_NAME' in the file '$FILE_PATH'."
+                else
+                    echo "Failed to update model name in the file '$FILE_PATH'."
+                fi
+
+                echo "Checking if deployment $(Deployment) exists..."
+                deployment_exists=$(az ml online-deployment show --name $(Deployment) --endpoint-name $(Endpoint) -g $(ResourceGroup) -w $(WORKSPACE) --query "name" -o tsv)
+
+                if [ -z "$deployment_exists" ]; then
+                    echo "Deployment $(Deployment) does not exist. Creating deployment..."
+                    az ml online-deployment create --file $FILE_PATH --endpoint-name $(Endpoint) --name $(Deployment) --all-traffic -g $(ResourceGroup) -w $(WORKSPACE)
+                else
+                    echo "Deployment $(Deployment) exists. Updating deployment..."
+                    az ml online-deployment update --file $FILE_PATH --endpoint-name $(Endpoint) --name $(Deployment) -g $(ResourceGroup) -w $(WORKSPACE)
+                fi
+             
+          - task: AzureCLI@2
+            displayName: Check the status of the endpoint
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az ml online-endpoint show -n $(Endpoint) -g $(ResourceGroup) -w $(WORKSPACE)
+
+          - task: AzureCLI@2
+            displayName: Check the status of the deployment
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az ml online-deployment get-logs -e $(Endpoint) -n $(Deployment) -g $(ResourceGroup) -w $(WORKSPACE)
+
+          - task: AzureCLI@2
+            displayName: Invoke model
+            inputs:
+              azureSubscription: 'AzureConnection'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az ml online-endpoint invoke --name $(Endpoint) --request-file promptflow/deployment/sample-request.json  -g $(ResourceGroup) -w $(WORKSPACE)    
+
